@@ -266,15 +266,16 @@ public class SampleTest {
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
 		capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
 //		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "7.1.1");  //iPadMini
-		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.1.2");  //iPhone6
-		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "garvit's iPhone (2)");
+		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "8.3");  //iPhone6
+//		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "garvit's iPhone (2)");
+		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "TPGiPhone6");
 //		capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "garvit's iPad");
 //		capabilities.setCapability("udid","dcdbbe4b6d4f76ec109349143f6cdf7941c461aa");  //iPadMini
 		capabilities.setCapability("udid","16202d44bfaa64925a4cd6b4ae0a0fd267b1b097");  //iPhone 6 Plus
 		capabilities.setCapability(MobileCapabilityType.LAUNCH_TIMEOUT, "300000");  //ms
 		capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "300"); //sec
-//		capabilities.setCapability(MobileCapabilityType.APP, "/Users/amit.rawat/Desktop/Amit/Projects/Automation_MeetUP/Code/SafariLauncher_Builds/Sim/SafariLauncher.app");
-		capabilities.setCapability(MobileCapabilityType.APP, "/Users/ruchi.bajpai/Desktop/MeetUp/iPhone5_Builds/Equinox.app");
+//		capabilities.setCapability(MobileCapabilityType.APP, "/Users/admin/Desktop/iOs_App_Automation/Builds/Equinox.zip");
+		capabilities.setCapability(MobileCapabilityType.APP, "/Users/amit.rawat/Desktop/Amit/iOS_App_Automation/Git_Code/iosapp/Tool/iOSAppBuilds/Device/Prod/Api-Prod/Equinox.zip");
 //		capabilities.setCapability("fullReset", true);  // for iOS only
 		capabilities.setCapability("noReset", true);
 		capabilities.setCapability("autoAcceptAlerts", true);
@@ -283,6 +284,7 @@ public class SampleTest {
 
 
 		try {
+//			iosd=new IOSDriver(new URL("http://172.20.38.178:4723/wd/hub"), capabilities);
 			iosd=new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
 			iosd.findElement(MobileBy.AccessibilityId("launch safari")).click();
 
@@ -297,6 +299,29 @@ public class SampleTest {
 		finally{
 			iosd.close();
 			iosd.quit();
+		}
+	}
+	@Test(priority=7)
+	public void SeleniumChromeTest() throws MalformedURLException, InterruptedException {
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setBrowserName("chrome");
+		capabilities.setVersion("AWS");
+
+		try
+		{
+			WebDriver wd = new RemoteWebDriver(new URL("http://10.30.6.51:5555/wd/hub"), capabilities);
+			wd.navigate().to("https://blinkfitness.com/join/valley-stream");
+			String Screenshotpath = System.getProperty("user.dir") +  "/Screenshots/";
+			File scrFile = ((TakesScreenshot)wd).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile, new File(Screenshotpath + "chrome_ss_123456.png"));
+			wd.close();
+			wd.quit();
+
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 }
